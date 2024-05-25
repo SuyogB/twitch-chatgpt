@@ -92,7 +92,7 @@ const bot = new TwitchBot(TWITCH_USER, TWITCH_AUTH, channels, OPENAI_API_KEY, EN
 
 // setup openai operations
 file_context = fs.readFileSync("./file_context.txt", 'utf8');
-const openai_ops = new OpenAIOperations(file_context, OPENAI_API_KEY, MODEL_NAME, HISTORY_LENGTH);
+const openai_ops = new GoogleGenerativeAIOperations(file_context, OPENAI_API_KEY, MODEL_NAME, HISTORY_LENGTH);
 
 // setup twitch bot callbacks
 bot.onConnected((addr, port) => {
@@ -127,7 +127,7 @@ bot.onMessage(async (channel, user, message, self) => {
         console.log(`The message id is ${user["msg-id"]}`);
         if (user["msg-id"] === "highlighted-message") {
             console.log(`The message is ${message}`);
-            const response = await openai_ops.make_openai_call(message);
+            const response = await openai_ops.make_geminiai_call(message);
             bot.say(channel, response);
         }
     }
@@ -140,7 +140,7 @@ bot.onMessage(async (channel, user, message, self) => {
         }
 
         // make openai call
-        const response = await openai_ops.GoogleGenerativeAI(text);
+        const response = await openai_ops.make_geminiai_call(text);
 
         // split response if it exceeds twitch chat message length limit
         // send multiples messages with a delay in between
@@ -230,14 +230,14 @@ app.get('/gpt/:text', async (req, res) => {
     let answer = ""
     if (GPT_MODE === "CHAT") {
         //CHAT MODE EXECUTION
-        answer = await openai_ops.GoogleGenerativeAI(text);
+        answer = await openai_ops.make_geminiai_call(text);
     } else if(GPT_MODE === "PROMPT") {
         //PROMPT MODE EXECUTION
 
         // create prompt based on file_context and the user prompt
         let prompt = file_context;
         prompt += "\n\nUser: " + text + "\nAgent:"
-        answer = await openai_ops.GoogleGenerativeAI(prompt);
+        answer = await openai_ops.make_geminiai_call(prompt);
     } else {
         //ERROR MODE EXECUTION
         console.log("ERROR: GPT_MODE is not set to CHAT or PROMPT. Please set it as environment variable.")
