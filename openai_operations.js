@@ -1,5 +1,5 @@
 // Import modules
-import OpenAI from "openai";
+import google.generativeai as genai
 
 export class OpenAIOperations {
     constructor(file_context, openai_key, model_name, history_length) {
@@ -59,7 +59,7 @@ export class OpenAIOperations {
     async make_openai_call_completion(text) {
         try {
             const response = await this.openai.completions.create({
-              model: "text-davinci-003",
+              model: "embedding-001",
               prompt: text,
               temperature: 1,
               max_tokens: 256,
