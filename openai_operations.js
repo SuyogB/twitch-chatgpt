@@ -58,7 +58,7 @@ export class OpenAIOperations {
 
     async make_openai_call_completion(text) {
         try {
-            const response = await this.openai.completions.create({
+            const response = await GoogleGenerativeAI({
               model: "embedding-001",
               prompt: text,
               temperature: 1,
