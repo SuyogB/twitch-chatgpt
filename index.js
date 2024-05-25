@@ -23,7 +23,7 @@ app.set('view engine', 'ejs');
 // load env variables
 let GPT_MODE = process.env.GPT_MODE // CHAT or PROMPT
 let HISTORY_LENGTH = process.env.HISTORY_LENGTH // number of messages to keep in history
-let GEMINI_API_KEY = process.env.GEMINI_API_KEY // openai api key
+let OPENAI_API_KEY = process.env.OPENAI_API_KEY // openai api key
 let MODEL_NAME = process.env.MODEL_NAME // openai model name (e.g. gpt-3, gpt-3.5-turbo, gpt-4)
 let TWITCH_USER = process.env.TWITCH_USER // twitch bot username
 let TWITCH_AUTH =  process.env.TWITCH_AUTH // tmi auth token
