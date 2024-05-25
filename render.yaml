@@ -4,7 +4,7 @@ services:
     runtime: node
     branch: main
     plan: free
-    buildCommand: npm install
+    buildCommand: npm install @google/generative-ai
     startCommand: npm start
     envVars:
       - key: OPENAI_API_KEY
@@ -16,7 +16,7 @@ services:
       - key: HISTORY_LENGTH
         value: "3"
       - key: MODEL_NAME
-        value: "gpt-3.5-turbo"
+        value: "gemini-1.5-flash"
       - key: COMMAND_NAME
         value: "chat"
       - key: TWITCH_USER  # https://dev.twitch.tv/console
