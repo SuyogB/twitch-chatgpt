@@ -4,7 +4,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 export class GoogleGenerativeAIOperations {
     constructor(file_context, openai_key, model_name, history_length) {
         this.messages = [{role: "system", content: file_context}];
-        this.openai = new GoogleGenerativeAI({
+        this.genAI  = new GoogleGenerativeAI({
             apiKey: openai_key,
         });
         this.model_name = model_name;
@@ -28,8 +28,7 @@ export class GoogleGenerativeAIOperations {
             //Check if message history is exceeded
             this.check_history_length();
 
-            // Use await to get the response from openai
-            const response = await new GoogleGenerativeAI({
+            const model = genAI.getGenerativeModel({
                 model: this.model_name,
                 messages: this.messages,
                 temperature: 1,
@@ -38,6 +37,9 @@ export class GoogleGenerativeAIOperations {
                 frequency_penalty: 0,
                 presence_penalty: 0,
             });
+            
+            // Use await to get the response from openai
+            const response = await new model.startChat({role: "user", content: text});
 
             // Check if response has choices
             if (response.choices) {
