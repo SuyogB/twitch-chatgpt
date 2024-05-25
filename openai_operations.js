@@ -29,7 +29,7 @@ export class OpenAIOperations {
             this.check_history_length();
 
             // Use await to get the response from openai
-            const response = await GoogleGenerativeAI({
+            const response = await new GoogleGenerativeAI({
                 model: this.model_name,
                 messages: this.messages,
                 temperature: 1,
@@ -58,7 +58,7 @@ export class OpenAIOperations {
 
     async make_openai_call_completion(text) {
         try {
-            const response = await GoogleGenerativeAI({
+            const response = await new GoogleGenerativeAI({
               model: "embedding-001",
               prompt: text,
               temperature: 1,
