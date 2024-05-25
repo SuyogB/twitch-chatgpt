@@ -4,13 +4,13 @@ services:
     runtime: node
     branch: main
     plan: free
-    buildCommand: npm install @google/generative-ai
-    startCommand: npm install @google/generative-ai
+    buildCommand: npm install
+    startCommand: npm start
     envVars:
       - key: OPENAI_API_KEY
-        value: <your-openai-api-key>
+        value: "AIzaSyDNC337xHdNgBcHAE8GtdaIUDErEOXx1HU"
       - key: CHANNELS
-        value: <your-twitch-channel>
+        value: "deathwish_xoxo"
       - key: GPT_MODE
         value: "CHAT"
       - key: HISTORY_LENGTH
