@@ -1,10 +1,10 @@
 // Import modules
-import { google } from 'googleapis';
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 export class OpenAIOperations {
     constructor(file_context, openai_key, model_name, history_length) {
         this.messages = [{role: "system", content: file_context}];
-        this.openai = new OpenAI({
+        this.openai = new GoogleGenerativeAI({
             apiKey: openai_key,
         });
         this.model_name = model_name;
