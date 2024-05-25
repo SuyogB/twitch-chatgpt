@@ -3,7 +3,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 export class GoogleGenerativeAIOperations {
     constructor(file_context, openai_key, model_name, history_length) {
         this.messages = [{role: "system", content: file_context}];
-        this.genAI  = new GoogleGenerativeAI(process.env[openai_key]);
+        this.genAI  = new GoogleGenerativeAI({apiKey: openai_key});
         this.model_name = model_name;
         this.history_length = history_length;
     }
@@ -33,7 +33,7 @@ export class GoogleGenerativeAIOperations {
                 }
             });
 
-            const textResponse = await response.response.text();
+            const textResponse = await response.text();
             if (textResponse) {
                 console.log(`Agent Response: ${textResponse}`);
                 this.messages.push({role: "assistant", content: textResponse});
@@ -61,7 +61,7 @@ export class GoogleGenerativeAIOperations {
                 }
             });
 
-            const textResponse = await response.response.text();
+            const textResponse = await response.text();
             if (textResponse) {
                 console.log(`Agent Response: ${textResponse}`);
                 return textResponse;
