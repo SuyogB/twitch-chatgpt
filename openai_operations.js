@@ -3,7 +3,9 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 export class GoogleGenerativeAIOperations {
     constructor(file_context, openai_key, model_name, history_length) {
         this.messages = [{role: "system", content: file_context}];
-        this.genAI  = new GoogleGenerativeAI({apiKey: openai_key});
+        this.genAI = new GoogleGenerativeAI({
+            apiKey: openai_key,
+        });
         this.model_name = model_name;
         this.history_length = history_length;
     }
@@ -18,10 +20,16 @@ export class GoogleGenerativeAIOperations {
 
     async make_geminiai_call(text) {
         try {
+            // Add user message to messages
             this.messages.push({role: "user", content: text});
+
+            // Check if message history is exceeded
             this.check_history_length();
 
+            // Initialize model
             const model = this.genAI.getGenerativeModel({ model: this.model_name });
+
+            // Generate content
             const response = await model.generateContent({
                 prompt: text,
                 generationConfig: {
@@ -30,10 +38,11 @@ export class GoogleGenerativeAIOperations {
                     topP: 1,
                     frequencyPenalty: 0,
                     presencePenalty: 0,
-                }
+                },
             });
 
-            const textResponse = await response.text();
+            // Extract text response
+            const textResponse = response.text;
             if (textResponse) {
                 console.log(`Agent Response: ${textResponse}`);
                 this.messages.push({role: "assistant", content: textResponse});
@@ -49,7 +58,10 @@ export class GoogleGenerativeAIOperations {
 
     async make_geminiai_call_completion(text) {
         try {
+            // Initialize model
             const model = this.genAI.getGenerativeModel({ model: "embedding-001" });
+
+            // Generate content
             const response = await model.generateContent({
                 prompt: text,
                 generationConfig: {
@@ -58,10 +70,11 @@ export class GoogleGenerativeAIOperations {
                     topP: 1,
                     frequencyPenalty: 0,
                     presencePenalty: 0,
-                }
+                },
             });
 
-            const textResponse = await response.text();
+            // Extract text response
+            const textResponse = response.text;
             if (textResponse) {
                 console.log(`Agent Response: ${textResponse}`);
                 return textResponse;
