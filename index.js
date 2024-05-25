@@ -6,7 +6,7 @@ import expressWs from 'express-ws';
 
 import {job} from './keep_alive.js';
 
-import {OpenAIOperations} from './openai_operations.js';
+import {GoogleGenerativeAIOperations } from './openai_operations.js';
 import {TwitchBot} from './twitch_bot.js';
 
 // start keep alive cron job
