@@ -3,9 +3,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 export class GoogleGenerativeAIOperations {
     constructor(file_context, openai_key, model_name, history_length) {
         this.messages = [{role: "system", content: file_context}];
-        this.genAI  = new GoogleGenerativeAI({
-            apiKey: openai_key,
-        });
+        this.genAI  = new GoogleGenerativeAI(process.env[openai_key]);
         this.model_name = model_name;
         this.history_length = history_length;
     }
@@ -23,23 +21,25 @@ export class GoogleGenerativeAIOperations {
             this.messages.push({role: "user", content: text});
             this.check_history_length();
 
-            const response = await this.genAI.generateMessage({
-                model: this.model_name,
-                messages: this.messages,
-                temperature: 1,
-                max_tokens: 256,
-                top_p: 1,
-                frequency_penalty: 0,
-                presence_penalty: 0,
+            const model = this.genAI.getGenerativeModel({ model: this.model_name });
+            const response = await model.generateContent({
+                prompt: text,
+                generationConfig: {
+                    temperature: 1,
+                    maxOutputTokens: 256,
+                    topP: 1,
+                    frequencyPenalty: 0,
+                    presencePenalty: 0,
+                }
             });
 
-            if (response.choices && response.choices.length > 0) {
-                let agent_response = response.choices[0].message.content;
-                console.log(`Agent Response: ${agent_response}`);
-                this.messages.push({role: "assistant", content: agent_response});
-                return agent_response;
+            const textResponse = await response.response.text();
+            if (textResponse) {
+                console.log(`Agent Response: ${textResponse}`);
+                this.messages.push({role: "assistant", content: textResponse});
+                return textResponse;
             } else {
-                throw new Error("No choices returned from OpenAI");
+                throw new Error("No response text from OpenAI");
             }
         } catch (error) {
             console.error(error);
@@ -49,22 +49,24 @@ export class GoogleGenerativeAIOperations {
 
     async make_geminiai_call_completion(text) {
         try {
-            const response = await this.genAI.generateMessage({
-                model: "embedding-001",
+            const model = this.genAI.getGenerativeModel({ model: "embedding-001" });
+            const response = await model.generateContent({
                 prompt: text,
-                temperature: 1,
-                max_tokens: 256,
-                top_p: 1,
-                frequency_penalty: 0,
-                presence_penalty: 0,
+                generationConfig: {
+                    temperature: 1,
+                    maxOutputTokens: 256,
+                    topP: 1,
+                    frequencyPenalty: 0,
+                    presencePenalty: 0,
+                }
             });
 
-            if (response.choices && response.choices.length > 0) {
-                let agent_response = response.choices[0].text;
-                console.log(`Agent Response: ${agent_response}`);
-                return agent_response;
+            const textResponse = await response.response.text();
+            if (textResponse) {
+                console.log(`Agent Response: ${textResponse}`);
+                return textResponse;
             } else {
-                throw new Error("No choices returned from OpenAI");
+                throw new Error("No response text from OpenAI");
             }
         } catch (error) {
             console.error(error);
