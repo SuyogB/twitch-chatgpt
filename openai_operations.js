@@ -26,12 +26,9 @@ export class GoogleGenerativeAIOperations {
             // Check if message history is exceeded
             this.check_history_length();
 
-            // Initialize model
-            const model = this.genAI.getGenerativeModel({ model: this.model_name });
-
             // Generate content
-            const response = await model.generateContent({
-                prompt: text,
+            const response = await this.genAI.generateContent({
+                prompt: this.messages,
                 generationConfig: {
                     temperature: 1,
                     maxOutputTokens: 256,
@@ -42,41 +39,10 @@ export class GoogleGenerativeAIOperations {
             });
 
             // Extract text response
-            const textResponse = response.text;
+            const textResponse = response.responses[0].text;
             if (textResponse) {
                 console.log(`Agent Response: ${textResponse}`);
                 this.messages.push({role: "assistant", content: textResponse});
-                return textResponse;
-            } else {
-                throw new Error("No response text from OpenAI");
-            }
-        } catch (error) {
-            console.error(error);
-            return "Sorry, something went wrong. Please try again later.";
-        }
-    }
-
-    async make_geminiai_call_completion(text) {
-        try {
-            // Initialize model
-            const model = this.genAI.getGenerativeModel({ model: "embedding-001" });
-
-            // Generate content
-            const response = await model.generateContent({
-                prompt: text,
-                generationConfig: {
-                    temperature: 1,
-                    maxOutputTokens: 256,
-                    topP: 1,
-                    frequencyPenalty: 0,
-                    presencePenalty: 0,
-                },
-            });
-
-            // Extract text response
-            const textResponse = response.text;
-            if (textResponse) {
-                console.log(`Agent Response: ${textResponse}`);
                 return textResponse;
             } else {
                 throw new Error("No response text from OpenAI");
