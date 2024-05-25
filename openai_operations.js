@@ -29,7 +29,7 @@ export class OpenAIOperations {
             this.check_history_length();
 
             // Use await to get the response from openai
-            const response = await this.openai.chat.completions.create({
+            const response = await GoogleGenerativeAI({
                 model: this.model_name,
                 messages: this.messages,
                 temperature: 1,
