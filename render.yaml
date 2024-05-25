@@ -5,7 +5,7 @@ services:
     branch: main
     plan: free
     buildCommand: npm install @google/generative-ai
-    startCommand: npm start
+    startCommand: npm install @google/generative-ai
     envVars:
       - key: OPENAI_API_KEY
         value: <your-openai-api-key>
