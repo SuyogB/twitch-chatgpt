@@ -1,7 +1,7 @@
 // Import modules
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-export class OpenAIOperations {
+export class GoogleGenerativeAIOperations {
     constructor(file_context, openai_key, model_name, history_length) {
         this.messages = [{role: "system", content: file_context}];
         this.openai = new GoogleGenerativeAI({
@@ -20,7 +20,7 @@ export class OpenAIOperations {
         }
     }
 
-    async make_openai_call(text) {
+    async make_geminiai_call(text) {
         try {
             //Add user message to  messages
             this.messages.push({role: "user", content: text});
@@ -56,7 +56,7 @@ export class OpenAIOperations {
         }
     }
 
-    async make_openai_call_completion(text) {
+    async make_geminiai_call_completion(text) {
         try {
             const response = await new GoogleGenerativeAI({
               model: "embedding-001",
