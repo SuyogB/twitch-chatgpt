@@ -28,7 +28,7 @@ export class GoogleGenerativeAIOperations {
             //Check if message history is exceeded
             this.check_history_length();
 
-            const model = genAI.getGenerativeModel({
+            const model =  this.genAI.getGenerativeModel({
                 model: this.model_name,
                 messages: this.messages,
                 temperature: 1,
