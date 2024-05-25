@@ -140,7 +140,7 @@ bot.onMessage(async (channel, user, message, self) => {
         }
 
         // make openai call
-        const response = await openai_ops.make_openai_call(text);
+        const response = await openai_ops.GoogleGenerativeAI(text);
 
         // split response if it exceeds twitch chat message length limit
         // send multiples messages with a delay in between
@@ -230,14 +230,14 @@ app.get('/gpt/:text', async (req, res) => {
     let answer = ""
     if (GPT_MODE === "CHAT") {
         //CHAT MODE EXECUTION
-        answer = await openai_ops.make_openai_call(text);
+        answer = await openai_ops.GoogleGenerativeAI(text);
     } else if(GPT_MODE === "PROMPT") {
         //PROMPT MODE EXECUTION
 
         // create prompt based on file_context and the user prompt
         let prompt = file_context;
         prompt += "\n\nUser: " + text + "\nAgent:"
-        answer = await openai_ops.make_openai_call_completion(prompt);
+        answer = await openai_ops.GoogleGenerativeAI(prompt);
     } else {
         //ERROR MODE EXECUTION
         console.log("ERROR: GPT_MODE is not set to CHAT or PROMPT. Please set it as environment variable.")
