@@ -1,5 +1,5 @@
 // Import modules
-import generativeai as genai;
+import  { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai
 
 export class OpenAIOperations {
     constructor(file_context, openai_key, model_name, history_length) {
