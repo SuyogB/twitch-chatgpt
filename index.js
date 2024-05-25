@@ -23,7 +23,7 @@ app.set('view engine', 'ejs');
 // load env variables
 let GPT_MODE = process.env.GPT_MODE // CHAT or PROMPT
 let HISTORY_LENGTH = process.env.HISTORY_LENGTH // number of messages to keep in history
-let OPENAI_API_KEY = process.env.OPENAI_API_KEY // openai api key
+let GEMINI_API_KEY = process.env.GEMINI_API_KEY // openai api key
 let MODEL_NAME = process.env.MODEL_NAME // openai model name (e.g. gpt-3, gpt-3.5-turbo, gpt-4)
 let TWITCH_USER = process.env.TWITCH_USER // twitch bot username
 let TWITCH_AUTH =  process.env.TWITCH_AUTH // tmi auth token
@@ -43,10 +43,10 @@ if (!OPENAI_API_KEY) {
     console.log("No OPENAI_API_KEY found. Please set it as environment variable.")
 }
 if (!MODEL_NAME) {
-    MODEL_NAME = "gpt-3.5-turbo"
+    MODEL_NAME = "gemini-1.5-flash"
 }
 if (!TWITCH_USER) {
-    TWITCH_USER = "oSetinhasBot"
+    TWITCH_USER = "valerie__xoxo"
     console.log("No TWITCH_USER found. Using oSetinhasBot as default.")
 }
 if (!TWITCH_AUTH) {
@@ -63,7 +63,7 @@ if (!COMMAND_NAME) {
 }
 COMMAND_NAME = COMMAND_NAME.map(function(x){ return x.toLowerCase() })
 if (!CHANNELS) {
-    CHANNELS = ["oSetinhas", "jones88"]
+    CHANNELS = ["deathwish_xoxo"]
 } else {
     // split channels by comma into array
     CHANNELS = CHANNELS.split(",")
