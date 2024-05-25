@@ -1,5 +1,5 @@
 // Import modules
-import google.generativeai as genai;
+import generativeai as genai;
 
 export class OpenAIOperations {
     constructor(file_context, openai_key, model_name, history_length) {
