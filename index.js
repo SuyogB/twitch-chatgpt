@@ -140,7 +140,7 @@ bot.onMessage(async (channel, user, message, self) => {
         }
 
         // make openai call
-        const response = await openai_ops.generate_content(text);
+        const response = await openai_ops.make_geminiai_call(text);
 
         // split response if it exceeds twitch chat message length limit
         // send multiples messages with a delay in between
