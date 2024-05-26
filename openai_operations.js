@@ -27,7 +27,7 @@ export class GoogleGenerativeAIOperations {
             this.check_history_length();
 
             // Generate content
-            const response = await this.genAI.generate_content({
+            const response = await this.genAI.generateContent({
                 prompt: this.messages,
                 generationConfig: {
                     temperature: 1,
